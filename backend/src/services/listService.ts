@@ -18,6 +18,17 @@ export async function getBalance(user_id: number) {
     return result.rows[0].balance;
 }
 
+export async function addBalance(user_id: number, amount: number) {
+    await pool.query('BEGIN');
+    try{
+        await pool.query('UPDATE users SET balance = balance + $2 WHERE user_id = $1', [user_id, amount]);
+        await pool.query('COMMIT');
+    } catch (error) {
+        await pool.query('ROLLBACK');
+        throw error;
+    }
+}
+
 export async function getUsername(user_id: number) {
     const result = await pool.query('SELECT username FROM users WHERE user_id = $1', [user_id]);
     if (result.rows.length === 0) {
