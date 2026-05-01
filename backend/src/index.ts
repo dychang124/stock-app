@@ -3,6 +3,7 @@ import dotenv from 'dotenv';
 import authRoutes from './routes/auth';
 import stockRoutes from './routes/stocks';
 import listRoutes from './routes/list';
+import './services/marketService';
 import cors from 'cors';
 
 

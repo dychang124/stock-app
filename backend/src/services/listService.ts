@@ -6,7 +6,7 @@ export async function getUserStocks(user_id: number) {
 }
 
 export async function getAllStocks() {
-    const result = await pool.query('SELECT stock_name, (price - prev_close) AS daily_change, price FROM stocks');
+    const result = await pool.query('SELECT stock_name, (price - prev_close) AS daily_change, price, sentiment FROM stocks ORDER BY stock_name');
     return result.rows;
 }
 
