@@ -21,16 +21,16 @@ export const updateMarket = async () => {
             let trueChange: number;
             const newsNum = Math.floor(Math.random() * 100);
             if (diff >= price * 0.2) {
-                if (newsNum <= 5) {
+                if (newsNum <= 3) {
                     news = "Very Bad News";
                 }
-                else if (newsNum <= 15) {
+                else if (newsNum <= 10) {
                     news = "Bad News";
                 }
-                else if (newsNum <= 30) {
+                else if (newsNum <= 50) {
                     news = "Neutral News";
                 }
-                else if (newsNum <= 60) {
+                else if (newsNum <= 75) {
                     news = "Good News";
                 }
                 else {
@@ -38,30 +38,13 @@ export const updateMarket = async () => {
                 }
             }
             else if (diff < price * 0.2 && diff >= price * 0.05) {
-                if (newsNum <= 10) {
+                if (newsNum <= 5) {
                     news = "Very Bad News";
                 }
-                else if (newsNum <= 20) {
+                else if (newsNum <= 15) {
                     news = "Bad News";
                 }
-                else if (newsNum <= 40) {
-                    news = "Neutral News";
-                }
-                else if (newsNum <= 70) {
-                    news = "Good News";
-                }
-                else {
-                    news = "Very Good News";
-                }
-            }
-            else if (diff < price * 0.05 && diff >= price * -0.05) {
-                if (newsNum <= 15) {
-                    news = "Very Bad News";
-                }
-                else if (newsNum <= 30) {
-                    news = "Bad News";
-                }
-                else if (newsNum <= 55) {
+                else if (newsNum <= 60) {
                     news = "Neutral News";
                 }
                 else if (newsNum <= 80) {
@@ -71,17 +54,34 @@ export const updateMarket = async () => {
                     news = "Very Good News";
                 }
             }
-            else if (diff < price * -0.05 && diff >= price * -0.2) {
-                if (newsNum <= 20) {
+            else if (diff < price * 0.05 && diff >= price * -0.05) {
+                if (newsNum <= 10) {
                     news = "Very Bad News";
                 }
-                else if (newsNum <= 40) {
+                else if (newsNum <= 25) {
                     news = "Bad News";
                 }
-                else if (newsNum <= 65) {
+                else if (newsNum <= 70) {
                     news = "Neutral News";
                 }
-                else if (newsNum <= 85) {
+                else if (newsNum <= 90) {
+                    news = "Good News";
+                }
+                else {
+                    news = "Very Good News";
+                }
+            }
+            else if (diff < price * -0.05 && diff >= price * -0.2) {
+                if (newsNum <= 15) {
+                    news = "Very Bad News";
+                }
+                else if (newsNum <= 30) {
+                    news = "Bad News";
+                }
+                else if (newsNum <= 75) {
+                    news = "Neutral News";
+                }
+                else if (newsNum <= 90) {
                     news = "Good News";
                 }
                 else {
@@ -89,16 +89,16 @@ export const updateMarket = async () => {
                 }
             }
             else {
-                if (newsNum <= 25) {
+                if (newsNum <= 20) {
                     news = "Very Bad News";
                 }
-                else if (newsNum <= 50) {
+                else if (newsNum <= 40) {
                     news = "Bad News";
                 }
-                else if (newsNum <= 75) {
+                else if (newsNum <= 80) {
                     news = "Neutral News";
                 }
-                else if (newsNum <= 90) {
+                else if (newsNum <= 93) {
                     news = "Good News";
                 }
                 else {
@@ -147,22 +147,29 @@ export const updateMarket = async () => {
                 }
             }
             const shock = Math.random() < 0.1 ? (Math.random() * 2 + 1) : 1;
+            // if (shock > 1) {
+            //     console.log(`Market shock for ${stock_name}: ${shock.toFixed(2)}x`);
+            // }
             change = change * shock;
             trueChange = trueChange * shock;
 
             const newPrice = Math.max(1, price * (1 + change));
+
+
             const newTrueValue = Math.max(1, true_value * (1 + trueChange));
+            const maxDiff = price * 0.3; 
+            const cappedTrueValue = Math.min(Math.max(newTrueValue, price - maxDiff), price + maxDiff);
 
             if (newPrice > 1000) {
                 await pool.query(
                     'UPDATE stocks SET price = $1, true_value = $2, prev_close = $3, sentiment = $4 WHERE stock_name = $5',
-                    [newPrice / 10, newTrueValue / 10, price, news, stock_name]
+                    [newPrice / 10, cappedTrueValue / 10, price, news, stock_name]
                 );
                 await pool.query('UPDATE user_stocks SET quantity = quantity * 10 WHERE stock_name = $1', [stock_name]);
             } else {
                 await pool.query(
                     'UPDATE stocks SET price = $1, true_value = $2, prev_close = $3, sentiment = $4 WHERE stock_name = $5',
-                    [newPrice, newTrueValue, price, news, stock_name]
+                    [newPrice, cappedTrueValue, price, news, stock_name]
                 );
             }
         }
