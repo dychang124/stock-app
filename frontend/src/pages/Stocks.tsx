@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Stocks() {
-    type stock = { stock_name: string; daily_change: number; price: string };
+    type stock = { stock_name: string; daily_change: number; price: string; sentiment: string };
     const [stocks, setStocks] = useState<stock[]>([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -34,6 +34,7 @@ export default function Stocks() {
                 alert(`Successfully bought ${quantity} shares of ${stock_name}`);
                 setSelectedStock(null);
                 setQuantity(0);
+                setError('');
             } else {
                 setError(data.error);
             }
@@ -66,7 +67,7 @@ export default function Stocks() {
     }, [navigate]);
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '64px 0' }}>
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
                 <h1 style={{ textAlign: 'center' }}>Available Stocks</h1>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
@@ -74,6 +75,7 @@ export default function Stocks() {
                     <thead>
                             <tr>
                                 <th style={{ border: '1px solid black', padding: '8px' }}>Stock</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>News</th>
                                 <th style={{ border: '1px solid black', padding: '8px' }}>Daily Change</th>
                                 <th style={{ border: '1px solid black', padding: '8px' }}>Price</th>
                             </tr>
@@ -82,6 +84,7 @@ export default function Stocks() {
                             {stocks.map((stock, index) => (
                                 <tr key={index}>
                                     <td style={{ border: '1px solid black', padding: '8px' }}>{stock.stock_name}</td>
+                                    <td style={{ border: '1px solid black', padding: '8px' }}>{stock.sentiment}</td>
                                     <td style={{ border: '1px solid black', padding: '8px' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</td>
                                     <td style={{ border: '1px solid black', padding: '8px' }}>${Number(stock.price).toFixed(2)}</td>
                                     <td>

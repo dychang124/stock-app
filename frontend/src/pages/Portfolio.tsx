@@ -88,6 +88,30 @@ export default function Portfolio() {
             setError('An error occurred while selling stocks.');
         }
     };
+    const handleAddBalance = async () => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+
+        try {
+            await fetch('http://localhost:3000/list/addBalance', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({ amount: 1000 })
+            });
+
+        } catch (error) {
+            setError('An error occurred while adding to balance.');
+        }
+
+
+        fetchData();
+    };
     
     
 
@@ -96,6 +120,7 @@ export default function Portfolio() {
             <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
                 <h1 style={{ textAlign: 'center' }}>Welcome, {username}</h1>
                 <h1 style={{ textAlign: 'center' }}>Balance: ${Number(balance).toFixed(2)}</h1>
+                <button onClick={() => { handleAddBalance() }}>Add to Balance</button>
                 {error && <p style={{ color: 'red' }}>{error}</p>}
                 {userStocks.length > 0 ? (
                     <table style={{ width: '100%', borderCollapse: 'collapse' }}>
