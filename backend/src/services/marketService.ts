@@ -107,31 +107,31 @@ export const updateMarket = async () => {
             }
 
             if (news === "Very Bad News") {
-                change = Math.random() * -0.02 - 0.03;
+                change = Math.random() * -0.02 - 0.02;
                 if (diff < price * -0.25) {
-                    trueChange = Math.random() * -0.02 - 0.03;
+                    trueChange = Math.random() * -0.02 - 0.02;
                 }
                 else {
-                    trueChange = Math.random() * -0.05 - 0.05;
+                    trueChange = Math.random() * -0.05 - 0.04;
                 }
             }
             else if (news === "Bad News") {
-                change = Math.random() * -0.02 - 0.01;
+                change = Math.random() * -0.02;
                 if (diff < price * -0.15) {
-                    trueChange = Math.random() * -0.02 - 0.01;
+                    trueChange = Math.random() * -0.02;
                 }
                 else {
-                    trueChange = Math.random() * -0.02 - 0.03;
+                    trueChange = Math.random() * -0.02 - 0.02;
                 }
             }
             else if (news === "Neutral News") {
-                change = Math.random() * 0.01 - 0.005;
-                trueChange = Math.random() * 0.01 - 0.005;
+                change = Math.random() * 0.01;
+                trueChange = Math.random() * 0.01;
             }
             else if (news === "Good News") {
                 change = Math.random() * 0.02 + 0.01;
                 if (diff > price * 0.15) {
-                    trueChange = Math.random() * 0.02 + 0.01;
+                    trueChange = Math.random() * 0.02 + 0.015;
                 }
                 else {
                     trueChange = Math.random() * 0.02 + 0.03;

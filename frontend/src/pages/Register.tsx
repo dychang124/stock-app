@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField, Paper, Typography } from '@mui/material';
 
 export default function Register() {
     const [username, setUsername] = useState('');
@@ -14,23 +15,23 @@ export default function Register() {
     //     }
     // }, [navigate]);
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
-                <h1 style={{ textAlign: 'center' }}>Register</h1>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <input
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Paper sx={{ padding: '20px', width: '300px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: 'lightgrey' }}>
+                <Typography sx={{ textAlign: 'center' }} variant = "h4">Register</Typography>
+                {error && <Typography color="error">{error}</Typography>}
+                <TextField sx={{ backgroundColor: 'white' }}
                     type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <input
+                <TextField sx={{ backgroundColor: 'white' }}
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                 />
-                <button onClick={async () => {
+                <Button variant="contained" onClick={async () => {
                     try {
                         const response = await fetch('http://localhost:3000/auth/register', { 
                             method: 'POST',
@@ -49,11 +50,11 @@ export default function Register() {
                     } catch (error) {
                         setError('An error occurred while registering.');
                     }
-                }}>Sign Up</button>
-                <button onClick={async () => {
+                }}>Sign Up</Button>
+                <Button sx={{ backgroundColor: 'white' }} variant="outlined" onClick={async () => {
                     navigate('/login');
-                }}>Back to Login</button>
-            </div>
-        </div>
+                }}>Back to Login</Button>
+            </Paper>
+        </Box>
     );
 }
