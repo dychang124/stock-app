@@ -105,46 +105,56 @@ export const updateMarket = async () => {
                     news = "Very Good News";
                 }
             }
-
+            //const diffRatio = diff / price;
             if (news === "Very Bad News") {
                 change = Math.random() * -0.02 - 0.02;
-                if (diff < price * -0.25) {
-                    trueChange = Math.random() * -0.02 - 0.02;
-                }
-                else {
-                    trueChange = Math.random() * -0.05 - 0.04;
-                }
+                const trueChangeMagnitude = Math.random() * -0.005 - 0.005;
+                trueChange = trueChangeMagnitude;
+                // if (diff < price * -0.25) {
+                //     trueChange = Math.random() * -0.02 - 0.02;
+                // }
+                // else {
+                //     trueChange = Math.random() * -0.04 - 0.04;
+                // }
             }
             else if (news === "Bad News") {
                 change = Math.random() * -0.02;
-                if (diff < price * -0.15) {
-                    trueChange = Math.random() * -0.02;
-                }
-                else {
-                    trueChange = Math.random() * -0.02 - 0.02;
-                }
+                const trueChangeMagnitude = Math.random() * -0.005;
+                trueChange = trueChangeMagnitude;
+                // if (diff < price * -0.15) {
+                //     trueChange = Math.random() * -0.02;
+                // }
+                // else {
+                //     trueChange = Math.random() * -0.02 - 0.02;
+                // }
             }
             else if (news === "Neutral News") {
                 change = Math.random() * 0.01;
-                trueChange = Math.random() * 0.01;
+                const trueChangeMagnitude = Math.random() * 0.0025;
+                trueChange = trueChangeMagnitude;
+                //trueChange = Math.random() * 0.01;
             }
             else if (news === "Good News") {
                 change = Math.random() * 0.02 + 0.01;
-                if (diff > price * 0.15) {
-                    trueChange = Math.random() * 0.02 + 0.015;
-                }
-                else {
-                    trueChange = Math.random() * 0.02 + 0.03;
-                }
+                const trueChangeMagnitude = Math.random() * 0.0005 + 0.0025;
+                trueChange = trueChangeMagnitude;
+                // if (diff > price * 0.15) {
+                //     trueChange = Math.random() * 0.02 + 0.015;
+                // }
+                // else {
+                //     trueChange = Math.random() * 0.02 + 0.03;
+                // }
             }
             else {
                 change = Math.random() * 0.02 + 0.03;
-                if (diff > price * 0.25) {
-                    trueChange = Math.random() * 0.02 + 0.03;
-                }
-                else {
-                    trueChange = Math.random() * 0.05 + 0.05;
-                }
+                const trueChangeMagnitude = Math.random() * 0.005 + 0.0075;
+                trueChange = trueChangeMagnitude;
+                // if (diff > price * 0.25) {
+                //     trueChange = Math.random() * 0.02 + 0.03;
+                // }
+                // else {
+                //     trueChange = Math.random() * 0.05 + 0.05;
+                // }
             }
             const shock = Math.random() < 0.1 ? (Math.random() * 2 + 1) : 1;
             // if (shock > 1) {
@@ -154,22 +164,21 @@ export const updateMarket = async () => {
             trueChange = trueChange * shock;
 
             const newPrice = Math.max(1, price * (1 + change));
-
+            
+            trueChange = Math.max(-0.2, Math.min(0.2, trueChange));
 
             const newTrueValue = Math.max(1, true_value * (1 + trueChange));
-            const maxDiff = price * 0.3; 
-            const cappedTrueValue = Math.min(Math.max(newTrueValue, price - maxDiff), price + maxDiff);
 
             if (newPrice > 1000) {
                 await pool.query(
                     'UPDATE stocks SET price = $1, true_value = $2, prev_close = $3, sentiment = $4 WHERE stock_name = $5',
-                    [newPrice / 10, cappedTrueValue / 10, price, news, stock_name]
+                    [newPrice / 10, newTrueValue / 10, price, news, stock_name]
                 );
                 await pool.query('UPDATE user_stocks SET quantity = quantity * 10 WHERE stock_name = $1', [stock_name]);
             } else {
                 await pool.query(
                     'UPDATE stocks SET price = $1, true_value = $2, prev_close = $3, sentiment = $4 WHERE stock_name = $5',
-                    [newPrice, cappedTrueValue, price, news, stock_name]
+                    [newPrice, newTrueValue, price, news, stock_name]
                 );
             }
         }
