@@ -1,31 +1,39 @@
 import { useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
+import { AppBar, Toolbar, Button, Typography, Box, MenuItem, Menu } from '@mui/material';
 
 export default function Navbar() {
     const location = useLocation();
     const navigate = useNavigate();
-    const [showDropdown, setShowDropdown] = useState(false);
+    const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+    const open = Boolean(anchorEl);
     
     const notSignedIn = location.pathname === '/login' || location.pathname === '/register'
 
     return (
-        <nav style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '10px', backgroundColor: '#f0f0f0' }}>
-            <h1 style={{ margin: 0 }}>Stock Trading App</h1>
-            {!notSignedIn && (
-                <div>
-                    <button onClick={() => navigate('/')}>My Portfolio</button>
-                    <button onClick={() => navigate('/stocks')}>Buy Stocks</button>
-                    <button onClick={() => setShowDropdown(!showDropdown)}>👤</button>
-                    {showDropdown && (
-                        <div style={{ position: 'absolute', top: '50px', right: '10px', backgroundColor: '#fff', border: '1px solid #ccc', borderRadius: '4px', overflow: 'hidden' }}>
-                            <ul style={{ listStyle: 'none', margin: 0, padding: 0 }}>
-                                <li style={{ padding: '10px 20px', cursor: 'pointer' }} onClick={() => { navigate('/profile'); setShowDropdown(false); }}>Edit Profile</li>
-                                <li style={{ padding: '10px 20px', cursor: 'pointer' }} onClick={() => { localStorage.removeItem('token'); navigate('/login'); setShowDropdown(false); }}>Logout</li>
-                            </ul>
-                        </div>
-                    )}
-                </div>
-            )}
-        </nav>
+        <AppBar position="static" elevation={0} sx={{ backgroundColor: 'lightblue', color: 'black' }}>
+            <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
+                <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
+                    Stock Trading App
+                </Typography>
+                {!notSignedIn && (
+                    <Box>
+                        <Button color="inherit" onClick={() => navigate('/')}>
+                            My Portfolio
+                        </Button>
+                        <Button color="inherit" onClick={() => navigate('/stocks')}>
+                            Buy Stocks
+                        </Button>
+                        <Button color="inherit" onClick={(e) => setAnchorEl(e.currentTarget)}>
+                            👤
+                        </Button>
+                            <Menu anchorEl={anchorEl} open={open} onClose={() => setAnchorEl(null)}>
+                                <MenuItem onClick={() => { navigate('/profile'); setAnchorEl(null); }}>Edit Profile</MenuItem>
+                                <MenuItem onClick={() => { localStorage.removeItem('token'); navigate('/login'); setAnchorEl(null); }}>Logout</MenuItem>
+                            </Menu>
+                    </Box>
+                )}
+            </Toolbar>
+        </AppBar>
     );
 }
