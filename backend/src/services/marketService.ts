@@ -108,22 +108,22 @@ export const updateMarket = async () => {
             //const diffRatio = diff / price;
             if (news === "Very Bad News") {
                 change = Math.random() * -0.02 - 0.03;
-                const trueChangeMagnitude = Math.random() * -0.005 - 0.005;
+                const trueChangeMagnitude = Math.random() * -0.005 - 0.0075;
                 trueChange = trueChangeMagnitude;
             }
             else if (news === "Bad News") {
                 change = Math.random() * -0.02 - 0.01;
-                const trueChangeMagnitude = Math.random() * -0.005;
+                const trueChangeMagnitude = Math.random() * -0.005 - 0.0025;
                 trueChange = trueChangeMagnitude;
             }
             else if (news === "Neutral News") {
                 change = Math.random() * 0.02 - 0.01;
-                const trueChangeMagnitude = Math.random() * 0.0025;
+                const trueChangeMagnitude = Math.random() * 0.005 - 0.0025;
                 trueChange = trueChangeMagnitude;
             }
             else if (news === "Good News") {
                 change = Math.random() * 0.02 + 0.01;
-                const trueChangeMagnitude = Math.random() * 0.0005 + 0.0025;
+                const trueChangeMagnitude = Math.random() * 0.005 + 0.0025;
                 trueChange = trueChangeMagnitude;
             }
             else {
