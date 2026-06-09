@@ -1,7 +1,7 @@
 import pool from '../db/index';
 
 export async function getUserStocks(user_id: number) {
-    const result = await pool.query('SELECT user_stocks.stock_name, quantity, price FROM user_stocks JOIN stocks ON user_stocks.stock_name = stocks.stock_name WHERE user_id = $1;', [user_id]);
+    const result = await pool.query('SELECT user_stocks.stock_name, quantity, (price - prev_close) AS daily_change, price FROM user_stocks JOIN stocks ON user_stocks.stock_name = stocks.stock_name WHERE user_id = $1;', [user_id]);
     return result.rows;
 }
 

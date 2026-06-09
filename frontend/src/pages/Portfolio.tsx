@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 export default function Portfolio() {
     const [username, setUsername] = useState('');
     const [balance, setBalance] = useState(0);
-    type UserStock = { stock_name: string; quantity: number; price: string };
+    type UserStock = { stock_name: string; quantity: number; daily_change: number; price: string };
     const [userStocks, setUserStocks] = useState<UserStock[]>([]);
     const [error, setError] = useState('');
     const navigate = useNavigate();
@@ -128,6 +128,7 @@ export default function Portfolio() {
                             <tr>
                                 <th style={{ border: '1px solid black', padding: '8px' }}>Stock</th>
                                 <th style={{ border: '1px solid black', padding: '8px' }}>Quantity</th>
+                                <th style={{ border: '1px solid black', padding: '8px' }}>Daily Change</th>
                                 <th style={{ border: '1px solid black', padding: '8px' }}>Price</th>
                             </tr>
                         </thead>
@@ -136,6 +137,7 @@ export default function Portfolio() {
                                 <tr key={index}>
                                     <td style={{ border: '1px solid black', padding: '8px' }}>{stock.stock_name}</td>
                                     <td style={{ border: '1px solid black', padding: '8px' }}>{stock.quantity}</td>
+                                    <td style={{ border: '1px solid black', padding: '8px' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</td>
                                     <td style={{ border: '1px solid black', padding: '8px' }}>${Number(stock.price).toFixed(2)}</td>
                                     <td>
                                         {selectedStock === stock.stock_name ? (
