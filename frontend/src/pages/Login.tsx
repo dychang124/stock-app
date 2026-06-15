@@ -8,12 +8,12 @@ export default function Login() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
-    // useEffect(() => {
-    //     const token = localStorage.getItem('token');
-    //     if (token) {
-    //         navigate('/');
-    //     }
-    // }, [navigate]);
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (token) {
+            navigate('/');
+        }
+    }, [navigate]);
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Paper sx={{ padding: '20px', width: '300px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: 'lightgrey' }}>
