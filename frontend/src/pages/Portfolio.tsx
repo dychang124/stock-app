@@ -1,5 +1,7 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+
 
 export default function Portfolio() {
     const [username, setUsername] = useState('');
@@ -52,6 +54,8 @@ export default function Portfolio() {
     };
     useEffect(() => {
         fetchData();
+        const interval = setInterval(fetchData, 60000);
+        return () => clearInterval(interval);
     }, []);
 
     const handleSell = async (stock_name: string) => {
@@ -116,56 +120,62 @@ export default function Portfolio() {
     
 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
-                <h1 style={{ textAlign: 'center' }}>Welcome, {username}</h1>
-                <h1 style={{ textAlign: 'center' }}>Balance: ${Number(balance).toFixed(2)}</h1>
-                <button onClick={() => { handleAddBalance() }}>Add to Balance</button>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
+                <Typography variant='h4' sx={{ textAlign: 'center' }}>Welcome, {username}</Typography>
+                <Typography variant='h5' sx={{ textAlign: 'center' }}>Balance: ${Number(balance).toFixed(2)}</Typography>
+                <Button variant='contained' size='small' onClick={() => { handleAddBalance() }}>
+                    Add to Balance
+                </Button>
+                {error && <Typography color='error'>{error}</Typography>}
                 {userStocks.length > 0 ? (
-                    <table style={{ width: '100%', borderCollapse: 'collapse' }}>
-                        <thead>
-                            <tr>
-                                <th style={{ border: '1px solid black', padding: '8px' }}>Stock</th>
-                                <th style={{ border: '1px solid black', padding: '8px' }}>Quantity</th>
-                                <th style={{ border: '1px solid black', padding: '8px' }}>Daily Change</th>
-                                <th style={{ border: '1px solid black', padding: '8px' }}>Price</th>
-                            </tr>
-                        </thead>
-                        <tbody>
+                    <Table sx={{ width: '100%', borderCollapse: 'collapse' }}>
+                        <TableHead>
+                            <TableRow>
+                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Stock</TableCell>
+                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Quantity</TableCell>
+                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Daily Change</TableCell>
+                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Price</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
                             {userStocks.map((stock, index) => (
-                                <tr key={index}>
-                                    <td style={{ border: '1px solid black', padding: '8px' }}>{stock.stock_name}</td>
-                                    <td style={{ border: '1px solid black', padding: '8px' }}>{stock.quantity}</td>
-                                    <td style={{ border: '1px solid black', padding: '8px' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</td>
-                                    <td style={{ border: '1px solid black', padding: '8px' }}>${Number(stock.price).toFixed(2)}</td>
-                                    <td>
+                                <TableRow key={index}>
+                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>{stock.stock_name}</TableCell>
+                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>{stock.quantity}</TableCell>
+                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</TableCell>
+                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>${Number(stock.price).toFixed(2)}</TableCell>
+                                    <TableCell sx={{ borderBottom: 'none' }}>
                                         {selectedStock === stock.stock_name ? (
-                                            <div>
-                                                <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
-                                                    <input 
+                                            <Box sx={{ display: 'flex', gap: '8px' }}>
+                                                <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
+                                                    <TextField
                                                         type="number" 
+                                                        size="small"
+                                                        sx={{ width: '100px' }}
                                                         value={quantity || ''}
-                                                        min="1"  
-                                                        onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 0))} 
+                                                        slotProps={{ htmlInput: {min: 0}  }}
+                                                        onChange={(e) => setQuantity(Math.max(0, parseInt(e.target.value) || 0))} 
                                                     />
-                                                    <span>${(quantity * Number(stock.price)).toFixed(2)}</span>
-                                                </div>
-                                                <button onClick={() => handleSell(stock.stock_name)}>Confirm</button>
-                                                <button onClick={() => setSelectedStock(null)}>Cancel</button>
-                                            </div>
+                                                    <Typography component="span">${(quantity * Number(stock.price)).toFixed(2)}</Typography>
+                                                </Box>
+                                                <Button variant="contained" size="small" onClick={() => handleSell(stock.stock_name)}>Confirm</Button>
+                                                <Button variant="outlined" size="small" onClick={() => setSelectedStock(null)}>Cancel</Button>
+                                            </Box>
                                         ) : (
-                                            <button onClick={() => { setSelectedStock(stock.stock_name); setQuantity(1); }}>Sell</button>
+                                            <Button variant="contained" size="small" onClick={() => { setSelectedStock(stock.stock_name); setQuantity(1); }}>Sell</Button>
                                         )}
-                                    </td>
-                                </tr>
+                                    </TableCell>
+                                </TableRow>
                             ))}
-                        </tbody>
-                    </table>
+                        </TableBody>
+                    </Table>
                 ) : (
-                    <p style={{ textAlign: 'center' }}>You don't own any stocks</p>
+                    <Typography variant="body1" sx={{ textAlign: 'center' }}>
+                        You don't own any stocks
+                    </Typography>
                 )}
-            </div>
-        </div>
+            </Box>
+        </Box>
     );
 }

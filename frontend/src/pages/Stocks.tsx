@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Paper, Typography, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
 
 export default function Stocks() {
     type stock = { stock_name: string; daily_change: number; price: string; sentiment: string };
