@@ -17,6 +17,7 @@ export default function Portfolio() {
         const token = localStorage.getItem('token');
         if (!token) {
             navigate('/login');
+            return;
         }
         try {
             const response = await fetch('http://localhost:3000/list/username', {
@@ -53,10 +54,17 @@ export default function Portfolio() {
         }
     };
     useEffect(() => {
-        fetchData();
-        const interval = setInterval(fetchData, 60000);
-        return () => clearInterval(interval);
-    }, []);
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+            return;
+        }
+        else {
+            fetchData();
+            const interval = setInterval(fetchData, 60000);
+            return () => clearInterval(interval);
+        }
+    }, [navigate]);
 
     const handleSell = async (stock_name: string) => {
         const token = localStorage.getItem('token');

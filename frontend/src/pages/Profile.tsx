@@ -1,5 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
+import { Box, Button, TextField, Paper, Typography } from '@mui/material';
 
 export default function Profile() {
     const [new_username, setNewUsername] = useState('');
@@ -7,6 +8,12 @@ export default function Profile() {
     const [error, setError] = useState('');
     const navigate = useNavigate();
 
+    useEffect(() => {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            navigate('/login');
+        }
+    }, [navigate]);
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         const token = localStorage.getItem('token');
@@ -64,24 +71,25 @@ export default function Profile() {
         setNewUsername('');
     }; 
     return (
-        <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <div style={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
-                <h1 style={{ textAlign: 'center' }}>Profile</h1>
-                {error && <p style={{ color: 'red' }}>{error}</p>}
-                <input
-                    type="text"
-                    placeholder="Username"
+        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
+            <Paper sx={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px', padding: '20px', backgroundColor: 'lightgrey' }}>
+                <Typography variant="h4" sx={{ textAlign: 'center' }}>Profile</Typography>
+                {error && <Typography color="error">{error}</Typography>}
+                <TextField sx={{ backgroundColor: 'white' }}
+                    label="Username"
                     value={new_username}
                     onChange={(e) => setNewUsername(e.target.value)}
                 />
-                <input
+                <TextField sx={{ backgroundColor: 'white' }}
+                    label="Password"
                     type="password"
-                    placeholder="Password"
                     value={new_password}
                     onChange={(e) => setNewPassword(e.target.value)}
                 />
-                <button onClick={handleSubmit}>Update Profile</button>
-            </div>
-        </div>
+                <Button variant="contained" onClick={handleSubmit}>
+                    Update Profile
+                </Button>
+            </Paper>
+        </Box>
     );
 }
