@@ -22,7 +22,7 @@ export default function Stocks() {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/stocks/buy', {
+            const response = await fetch('import.meta.env.VITE_API_URL/stocks/buy', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -52,7 +52,7 @@ export default function Stocks() {
         else {
             const fetchData = async () => {
                 try {
-                    const response = await fetch('http://localhost:3000/list/all-stocks', {
+                    const response = await fetch('import.meta.env.VITE_API_URL/list/all-stocks', {
                         headers: {
                             'Authorization': `Bearer ${token}`
                         }

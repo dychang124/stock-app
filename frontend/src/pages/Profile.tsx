@@ -27,7 +27,7 @@ export default function Profile() {
         }
         else if (new_username){
             try {
-                const response = await fetch('http://localhost:3000/auth/set-username', {
+                const response = await fetch('import.meta.env.VITE_API_URL/auth/set-username', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
@@ -48,7 +48,7 @@ export default function Profile() {
         }
         else if (new_password){
             try {
-                const response = await fetch('http://localhost:3000/auth/set-password', {
+                const response = await fetch('import.meta.env.VITE_API_URL/auth/set-password', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',

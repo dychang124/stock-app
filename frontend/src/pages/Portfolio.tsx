@@ -20,7 +20,7 @@ export default function Portfolio() {
             return;
         }
         try {
-            const response = await fetch('http://localhost:3000/list/username', {
+            const response = await fetch('import.meta.env.VITE_API_URL/list/username', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -31,7 +31,7 @@ export default function Portfolio() {
             setError('An error occurred while fetching username.');
         }
         try {
-            const response = await fetch('http://localhost:3000/list/balance', {
+            const response = await fetch('import.meta.env.VITE_API_URL/list/balance', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -42,7 +42,7 @@ export default function Portfolio() {
             setError('An error occurred while fetching balance.');
         }
         try {
-            const response = await fetch('http://localhost:3000/list/user-stocks', {
+            const response = await fetch('import.meta.env.VITE_API_URL/list/user-stocks', {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -78,7 +78,7 @@ export default function Portfolio() {
         }
 
         try {
-            const response = await fetch('http://localhost:3000/stocks/sell', {
+            const response = await fetch('import.meta.env.VITE_API_URL/stocks/sell', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
@@ -108,7 +108,7 @@ export default function Portfolio() {
         }
 
         try {
-            await fetch('http://localhost:3000/list/addBalance', {
+            await fetch('import.meta.env.VITE_API_URL/list/addBalance', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',
