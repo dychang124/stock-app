@@ -33,7 +33,7 @@ export default function Register() {
                 />
                 <Button variant="contained" onClick={async () => {
                     try {
-                        const response = await fetch('import.meta.env.VITE_API_URL/auth/register', { 
+                        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/register`, { 
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
