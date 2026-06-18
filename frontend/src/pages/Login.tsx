@@ -32,8 +32,12 @@ export default function Login() {
                     onChange={(e) => setPassword(e.target.value)}
                 />
                 <Button variant="contained" onClick={async () => {
+                    if (!username || !password) {
+                        setError('Username and password are required.');
+                        return;
+                    }
                     try {
-                        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, { 
+                        const response = await fetch(`${import.meta.env.VITE_API_URL}/auth/login`, {
                             method: 'POST',
                             headers: {
                                 'Content-Type': 'application/json'
