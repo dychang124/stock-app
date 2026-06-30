@@ -153,7 +153,7 @@ export default function Portfolio() {
                                     <TableCell>{stock.quantity}</TableCell>
                                     <TableCell sx={{ color: Number(stock.daily_change) >= 0 ? 'green' : 'red' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</TableCell>
                                     <TableCell>${Number(stock.price).toFixed(2)}</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none' }}>
+                                    <TableCell sx={{ borderBottom: 'none', backgroundColor: 'white' }}>
                                         {selectedStock === stock.stock_name ? (
                                             <Box sx={{ display: 'flex', gap: '8px' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
