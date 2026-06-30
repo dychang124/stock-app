@@ -140,19 +140,19 @@ export default function Portfolio() {
                     <Table sx={{ width: '100%', borderCollapse: 'collapse' }}>
                         <TableHead>
                             <TableRow>
-                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Stock</TableCell>
-                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Quantity</TableCell>
-                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Daily Change</TableCell>
-                                <TableCell sx={{ border: '1px solid black', padding: '8px' }}>Price</TableCell>
+                                <TableCell>Stock</TableCell>
+                                <TableCell>Quantity</TableCell>
+                                <TableCell>Daily Change</TableCell>
+                                <TableCell>Price</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
                             {userStocks.map((stock, index) => (
-                                <TableRow key={index}>
-                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>{stock.stock_name}</TableCell>
-                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>{stock.quantity}</TableCell>
-                                    <TableCell sx={{ border: '1px solid black', padding: '8px', color: Number(stock.daily_change) >= 0 ? 'green' : 'red' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</TableCell>
-                                    <TableCell sx={{ border: '1px solid black', padding: '8px' }}>${Number(stock.price).toFixed(2)}</TableCell>
+                                <TableRow key={index} sx={{ '&:nth-of-type(odd)': { backgroundColor: 'action.hover' } }}>
+                                    <TableCell>{stock.stock_name}</TableCell>
+                                    <TableCell>{stock.quantity}</TableCell>
+                                    <TableCell sx={{ color: Number(stock.daily_change) >= 0 ? 'green' : 'red' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</TableCell>
+                                    <TableCell>${Number(stock.price).toFixed(2)}</TableCell>
                                     <TableCell sx={{ borderBottom: 'none' }}>
                                         {selectedStock === stock.stock_name ? (
                                             <Box sx={{ display: 'flex', gap: '8px' }}>
