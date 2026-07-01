@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container } from '@mui/material';
 
 export default function Stocks() {
     type stock = { stock_name: string; daily_change: number; price: string; sentiment: string };
@@ -70,8 +70,8 @@ export default function Stocks() {
     }, [navigate]);
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'flex-start', padding: '64px 0' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
+        <Container maxWidth="lg" sx={{ paddingTop: '40px' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <Typography variant="h4" sx={{ textAlign: 'center' }}>Available Stocks</Typography>
                 {error && <Typography color="error">{error}</Typography>}
                 <Table sx={{ width: '100%', borderCollapse: 'collapse' }}>
@@ -117,6 +117,6 @@ export default function Stocks() {
                     </TableBody>
                 </Table>
             </Box>
-        </Box>
+        </Container>
     );
 }

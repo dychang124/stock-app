@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell } from '@mui/material';
+import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container } from '@mui/material';
 
 
 export default function Portfolio() {
@@ -128,11 +128,11 @@ export default function Portfolio() {
     
 
     return (
-        <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px' }}>
+        <Container maxWidth="lg" sx={{ paddingTop: '40px' }}>
+            <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px'}}>
                 <Typography variant='h4' sx={{ textAlign: 'center' }}>Welcome, {username}</Typography>
                 <Typography variant='h5' sx={{ textAlign: 'center' }}>Balance: ${Number(balance).toFixed(2)}</Typography>
-                <Button variant='contained' size='small' onClick={() => { handleAddBalance() }}>
+                <Button variant='contained' size='small' sx={{ alignSelf: 'center' }} onClick={() => { handleAddBalance() }}>
                     Add to Balance
                 </Button>
                 {error && <Typography color='error'>{error}</Typography>}
@@ -185,6 +185,6 @@ export default function Portfolio() {
                     </Typography>
                 )}
             </Box>
-        </Box>
+        </Container>
     );
 }
