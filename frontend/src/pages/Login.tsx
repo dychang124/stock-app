@@ -17,7 +17,7 @@ export default function Login() {
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
             <Paper sx={{ padding: '20px', width: '300px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
-                <Typography sx={{ textAlign: 'center' }} variant = "h4">Login</Typography>
+                <Typography sx={{ textAlign: 'center' }} variant="h5">Login</Typography>
                 {error && <Typography color="error">{error}</Typography>}
                 <TextField
                     type="text"

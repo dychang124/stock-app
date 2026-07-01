@@ -72,15 +72,15 @@ export default function Profile() {
     }; 
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Paper sx={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px', padding: '20px', backgroundColor: 'lightgrey' }}>
-                <Typography variant="h4" sx={{ textAlign: 'center' }}>Profile</Typography>
+            <Paper sx={{ display: 'flex', flexDirection: 'column', gap: '10px', width: '300px', padding: '20px' }}>
+                <Typography variant="h5" sx={{ textAlign: 'center' }}>Profile</Typography>
                 {error && <Typography color="error">{error}</Typography>}
-                <TextField sx={{ backgroundColor: 'white' }}
+                <TextField
                     label="Username"
                     value={new_username}
                     onChange={(e) => setNewUsername(e.target.value)}
                 />
-                <TextField sx={{ backgroundColor: 'white' }}
+                <TextField
                     label="Password"
                     type="password"
                     value={new_password}

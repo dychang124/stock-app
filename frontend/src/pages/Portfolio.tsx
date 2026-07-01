@@ -131,7 +131,7 @@ export default function Portfolio() {
         <Container maxWidth="lg" sx={{ paddingTop: '40px' }}>
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px'}}>
                 <Typography variant='h4' sx={{ textAlign: 'center' }}>Welcome, {username}</Typography>
-                <Typography variant='h5' sx={{ textAlign: 'center' }}>Balance: ${Number(balance).toFixed(2)}</Typography>
+                <Typography variant='h6' sx={{ textAlign: 'center' }}>Balance: ${Number(balance).toFixed(2)}</Typography>
                 <Button variant='contained' size='small' sx={{ alignSelf: 'center' }} onClick={() => { handleAddBalance() }}>
                     Add to Balance
                 </Button>
