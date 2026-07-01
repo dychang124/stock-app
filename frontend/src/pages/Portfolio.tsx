@@ -1,6 +1,6 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container } from '@mui/material';
+import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container, CircularProgress } from '@mui/material';
 
 
 export default function Portfolio() {
@@ -9,6 +9,7 @@ export default function Portfolio() {
     type UserStock = { stock_name: string; quantity: number; daily_change: number; price: string };
     const [userStocks, setUserStocks] = useState<UserStock[]>([]);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [selectedStock, setSelectedStock] = useState<string | null>(null);
     const [quantity, setQuantity] = useState(0);
@@ -51,6 +52,8 @@ export default function Portfolio() {
             setUserStocks(data);
         } catch (error) {
             setError('An error occurred while fetching user stocks.');
+        } finally {
+            setLoading(false);
         }
     };
     useEffect(() => {
@@ -136,7 +139,11 @@ export default function Portfolio() {
                     Add to Balance
                 </Button>
                 {error && <Typography color='error'>{error}</Typography>}
-                {userStocks.length > 0 ? (
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: '40px' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : userStocks.length > 0 ? (
                     <Table sx={{ width: '100%', borderCollapse: 'collapse' }}>
                         <TableHead>
                             <TableRow>

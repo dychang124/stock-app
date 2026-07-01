@@ -1,11 +1,12 @@
 import {useState, useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container } from '@mui/material';
+import { Box, Button, TextField, Typography, Table, TableHead, TableBody, TableRow, TableCell, Container, CircularProgress } from '@mui/material';
 
 export default function Stocks() {
     type stock = { stock_name: string; daily_change: number; price: string; sentiment: string };
     const [stocks, setStocks] = useState<stock[]>([]);
     const [error, setError] = useState('');
+    const [loading, setLoading] = useState(true);
     const navigate = useNavigate();
     const [selectedStock, setSelectedStock] = useState<string | null>(null);
     const [quantity, setQuantity] = useState(0);
@@ -61,6 +62,8 @@ export default function Stocks() {
                     setStocks(data);
                 } catch (error) {
                     setError('An error occurred while fetching stocks.');
+                } finally {
+                    setLoading(false);
                 }
             };
             fetchData();
@@ -74,6 +77,11 @@ export default function Stocks() {
             <Box sx={{ display: 'flex', flexDirection: 'column', gap: '10px' }}>
                 <Typography variant="h4" sx={{ textAlign: 'center' }}>Available Stocks</Typography>
                 {error && <Typography color="error">{error}</Typography>}
+                {loading ? (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', paddingTop: '40px' }}>
+                        <CircularProgress />
+                    </Box>
+                ) : (
                 <Table sx={{ width: '100%', borderCollapse: 'collapse' }}>
                     <TableHead>
                         <TableRow>
@@ -116,6 +124,7 @@ export default function Stocks() {
                         ))}
                     </TableBody>
                 </Table>
+                )}
             </Box>
         </Container>
     );
