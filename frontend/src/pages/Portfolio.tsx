@@ -144,6 +144,7 @@ export default function Portfolio() {
                                 <TableCell>Quantity</TableCell>
                                 <TableCell>Daily Change</TableCell>
                                 <TableCell>Price</TableCell>
+                                <TableCell />
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -153,7 +154,7 @@ export default function Portfolio() {
                                     <TableCell>{stock.quantity}</TableCell>
                                     <TableCell sx={{ color: Number(stock.daily_change) >= 0 ? 'green' : 'red' }}>{(Number(stock.daily_change) >= 0 ? '+' : '') + Number(stock.daily_change).toFixed(2)}</TableCell>
                                     <TableCell>${Number(stock.price).toFixed(2)}</TableCell>
-                                    <TableCell sx={{ borderBottom: 'none', backgroundColor: 'white' }}>
+                                    <TableCell>
                                         {selectedStock === stock.stock_name ? (
                                             <Box sx={{ display: 'flex', gap: '8px' }}>
                                                 <Box sx={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
@@ -171,7 +172,7 @@ export default function Portfolio() {
                                                 <Button variant="outlined" size="small" onClick={() => setSelectedStock(null)}>Cancel</Button>
                                             </Box>
                                         ) : (
-                                            <Button variant="contained" size="small" onClick={() => { setSelectedStock(stock.stock_name); setQuantity(1); }}>Sell</Button>
+                                            <Button variant="contained" color="error" size="small" onClick={() => { setSelectedStock(stock.stock_name); setQuantity(1); }}>Sell</Button>
                                         )}
                                     </TableCell>
                                 </TableRow>

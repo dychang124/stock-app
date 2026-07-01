@@ -11,7 +11,7 @@ export default function Navbar() {
     const notSignedIn = location.pathname === '/login' || location.pathname === '/register'
 
     return (
-        <AppBar position="static" elevation={0} sx={{ backgroundColor: 'lightblue', color: 'black' }}>
+        <AppBar position="static" elevation={0}>
             <Toolbar sx={{ display: 'flex', justifyContent: 'space-between', width: '100%' }}>
                 <Typography variant="h4" component="div" sx={{ flexGrow: 1 }}>
                     Stock Trading App

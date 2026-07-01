@@ -16,16 +16,16 @@ export default function Register() {
     }, [navigate]);
     return (
         <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-            <Paper sx={{ padding: '20px', width: '300px', display: 'flex', flexDirection: 'column', gap: '20px', backgroundColor: 'lightgrey' }}>
+            <Paper sx={{ padding: '20px', width: '300px', display: 'flex', flexDirection: 'column', gap: '20px' }}>
                 <Typography sx={{ textAlign: 'center' }} variant = "h4">Register</Typography>
                 {error && <Typography color="error">{error}</Typography>}
-                <TextField sx={{ backgroundColor: 'white' }}
+                <TextField
                     type="text"
                     placeholder="Username"
                     value={username}
                     onChange={(e) => setUsername(e.target.value)}
                 />
-                <TextField sx={{ backgroundColor: 'white' }}
+                <TextField
                     type="password"
                     placeholder="Password"
                     value={password}
@@ -55,7 +55,7 @@ export default function Register() {
                         setError('An error occurred while registering.');
                     }
                 }}>Sign Up</Button>
-                <Button sx={{ backgroundColor: 'white' }} variant="outlined" onClick={async () => {
+                <Button variant="outlined" onClick={async () => {
                     navigate('/login');
                 }}>Back to Login</Button>
             </Paper>
